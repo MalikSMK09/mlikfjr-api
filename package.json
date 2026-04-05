@@ -1,0 +1,53 @@
+{
+  "name": "media-downloader-api-pro",
+  "version": "1.0.0",
+  "description": "Professional REST API untuk download media dari berbagai platform sosial dan musik",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "prestart": "node scripts/check-setup.js",
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "check": "node scripts/check-setup.js"
+  },
+  "keywords": [
+    "media",
+    "downloader",
+    "api",
+    "express",
+    "ytdlp",
+    "whatsapp",
+    "bot"
+  ],
+  "author": "Masukkan Nama",
+  "license": "MIT",
+  "dependencies": {
+    "@prevter/tiktok-scraper": "^1.0.1",
+    "axios": "^1.6.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "express-validator": "^7.0.1",
+    "fs": "^0.0.1-security",
+    "fs-extra": "^11.2.0",
+    "helmet": "^7.1.0",
+    "instagram-private-api": "^1.46.1",
+    "mime-types": "^2.1.35",
+    "node-fetch": "^2.7.0",
+    "pino": "^8.16.2",
+    "pino-pretty": "^10.2.0",
+    "play-dl": "^1.9.7",
+    "tiktok-scraper": "^1.4.36",
+    "twitter-api-v2": "^1.28.0",
+    "uuid": "^9.0.1",
+    "yt-dlp-exec": "^1.0.2",
+    "yt-dlp-wrap": "^2.3.12"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0"
+  },
+  "directories": {
+    "test": "test"
+  }
+}

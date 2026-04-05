@@ -1,0 +1,41 @@
+# Cookie Files Directory
+
+This directory contains cookie files for various platforms.
+
+## Supported Platforms
+
+1. **youtube.txt** - YouTube cookies (optional) sudah
+2. **youtubemusic.txt** - YouTube Music cookies (required) sudah
+3. **spotify.txt** - Spotify cookies (required) sudah
+4. **instagram.txt** - Instagram cookies (required) sudah
+5. **threads.txt** - Threads cookies (required) COMING SOON
+6. **tiktok.txt** - TikTok cookies (required) sudah
+7. **twitter.txt** - Twitter/X cookies (required) sudah
+8. **facebook.txt** - Facebook cookies (required) sudah
+9. **pinterest.txt** - Pinterest cookies (optional) sudah
+10. **reddit.txt** - Reddit cookies (optional) sudah
+
+## How to Export Cookies
+
+### Chrome:
+1. Install "Get cookies.txt LOCALLY" extension
+2. Navigate to the platform website
+3. Login to your account
+4. Click the extension icon
+5. Export cookies for the domain
+6. Save as `<platform>.txt` in this folder
+
+### Firefox:
+1. Install "cookies.txt" extension
+2. Navigate to the platform website
+3. Login to your account
+4. Click the extension icon
+5. Export cookies for the domain
+6. Save as `<platform>.txt` in this folder
+
+## Notes
+
+- Cookies are optional for most platforms but may improve success rate
+- Cookies will expire and need to be updated periodically
+- Never share your cookie files
+- API will work without cookies but may have lower success rate

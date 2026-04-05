@@ -1,0 +1,598 @@
+[
+  {
+    "id": "core",
+    "title": "Core",
+    "description": "Core API functionality including health checks and API key management.",
+    "endpoints": [
+      {
+        "id": "get-health",
+        "name": "Health Check",
+        "method": "GET",
+        "path": "/v1/core/health",
+        "description": "Check if the server is running and get system status.",
+        "parameters": [],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X GET \"https://api.masukkan-nama.com/v1/core/health\""
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "uptime": 12345,
+            "status": "ok",
+            "timestamp": "2024-12-10T10:00:00.000Z",
+            "version": "1.0.0"
+          }
+        }
+      },
+      {
+        "id": "post-apikeys-create",
+        "name": "Create API Key",
+        "method": "POST",
+        "path": "/v1/core/apikeys/create",
+        "description": "Create a new API key for your account.",
+        "parameters": [
+          { "name": "owner", "type": "string", "required": true, "description": "Owner name/identifier" },
+          { "name": "label", "type": "string", "required": true, "description": "Label for the API key" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X POST \"https://api.masukkan-nama.com/v1/core/apikeys/create\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\"owner\": \"malik\", \"label\": \"production-key\"}'"
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "id": "abc123def456",
+            "apikey": "sk_live_abc123xyz...",
+            "owner": "username",
+            "label": "production-key",
+            "createdAt": "2024-12-10T10:00:00.000Z",
+            "expires": null
+          }
+        }
+      },
+      {
+        "id": "get-apikeys-usage",
+        "name": "API Key Usage",
+        "method": "GET",
+        "path": "/v1/core/apikeys/usage",
+        "description": "Get usage statistics and quota for an API key.",
+        "parameters": [
+          { "name": "apikey", "type": "string", "required": true, "description": "API key to check" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X GET \"https://api.masukkan-nama.com/v1/core/apikeys/usage?apikey=YOUR_API_KEY\""
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "calls": 123,
+            "limit": 1000,
+            "reset": 1670000000,
+            "plan": "free"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tools",
+    "title": "Tools",
+    "description": "Utility tools for developers including UUID, hash, base64, and URL shortener.",
+    "endpoints": [
+      {
+        "id": "get-uuid",
+        "name": "Generate UUID",
+        "method": "GET",
+        "path": "/v1/tools/uuid",
+        "description": "Generate a random UUID (Universally Unique Identifier).",
+        "parameters": [
+          { "name": "version", "type": "integer", "required": false, "description": "UUID version (default: 4)" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X GET \"https://api.masukkan-nama.com/v1/tools/uuid\""
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "uuid": "550e8400-e29b-41d4-a716-446655440000",
+            "version": 4,
+            "variant": "RFC 4122"
+          }
+        }
+      },
+      {
+        "id": "post-hash",
+        "name": "Generate Hash",
+        "method": "POST",
+        "path": "/v1/tools/hash",
+        "description": "Generate hash for any text input using various algorithms.",
+        "parameters": [
+          { "name": "input", "type": "string", "required": true, "description": "Text to hash" },
+          { "name": "algorithm", "type": "string", "required": false, "description": "sha256, sha512, sha1, md5" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X POST \"https://api.masukkan-nama.com/v1/tools/hash\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\"input\": \"Hello World\", \"algorithm\": \"sha256\"}'"
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "input": "Hello World",
+            "algorithm": "sha256",
+            "hash": "a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e"
+          }
+        }
+      },
+      {
+        "id": "post-base64",
+        "name": "Base64 Encode/Decode",
+        "method": "POST",
+        "path": "/v1/tools/base64",
+        "description": "Encode text to Base64 or decode Base64 to text.",
+        "parameters": [
+          { "name": "text", "type": "string", "required": true, "description": "Text to encode/decode" },
+          { "name": "mode", "type": "string", "required": false, "description": "encode or decode" },
+          { "name": "url_safe", "type": "boolean", "required": false, "description": "Use URL-safe Base64" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X POST \"https://api.masukkan-nama.com/v1/tools/base64\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\"text\": \"Hello World\", \"mode\": \"encode\"}'"
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "input": "Hello World",
+            "output": "SGVsbG8gV29ybGQ=",
+            "action": "encode"
+          }
+        }
+      },
+      {
+        "id": "post-shorten",
+        "name": "URL Shortener",
+        "method": "POST",
+        "path": "/v1/tools/shorten",
+        "description": "Shorten a long URL into a compact link.",
+        "parameters": [
+          { "name": "url", "type": "string", "required": true, "description": "URL to shorten" },
+          { "name": "custom", "type": "string", "required": false, "description": "Custom short code" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X POST \"https://api.masukkan-nama.com/v1/tools/shorten\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\"url\": \"https://example.com/very/long/url\"}'"
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "originalUrl": "https://example.com/very/long/url",
+            "shortUrl": "https://api.masukkan-nama.com/s/abc123",
+            "shortCode": "abc123",
+            "createdAt": "2024-12-10T10:00:00.000Z"
+          }
+        }
+      },
+      {
+        "id": "get-meme",
+        "name": "Random Meme",
+        "method": "GET",
+        "path": "/v1/tools/meme",
+        "description": "Get a random meme from various sources.",
+        "parameters": [],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X GET \"https://api.masukkan-nama.com/v1/tools/meme\""
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "title": "When the code finally works",
+            "imageUrl": "https://i.imgflip.com/1g8my4.jpg",
+            "source": "imgflip",
+            "upvotes": 5420
+          }
+        }
+      },
+      {
+        "id": "get-quote",
+        "name": "Random Quote",
+        "method": "GET",
+        "path": "/v1/tools/quote",
+        "description": "Get an inspirational or funny random quote.",
+        "parameters": [
+          { "name": "category", "type": "string", "required": false, "description": "inspirational, funny, life" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X GET \"https://api.masukkan-nama.com/v1/tools/quote?category=inspirational\""
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "quote": "The only way to do great work is to love what you do.",
+            "author": "Steve Jobs",
+            "category": "inspirational"
+          }
+        }
+      },
+      {
+        "id": "get-lyrics",
+        "name": "Search Lyrics",
+        "method": "GET",
+        "path": "/v1/tools/lyrics",
+        "description": "Search for song lyrics.",
+        "parameters": [
+          { "name": "q", "type": "string", "required": true, "description": "Search query" },
+          { "name": "limit", "type": "integer", "required": false, "description": "Max results (default: 5)" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X GET \"https://api.masukkan-nama.com/v1/tools/lyrics?q=hello\""
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "query": "hello",
+            "total": 1,
+            "results": [
+              { "title": "Hello", "artist": "Adele", "album": "25", "snippet": "Hello, it's me..." }
+            ]
+          }
+        }
+      },
+      {
+        "id": "get-tiktok-stalk",
+        "name": "TikTok User Info",
+        "method": "GET",
+        "path": "/v1/tools/stalk/tiktok",
+        "description": "Get TikTok user profile information.",
+        "parameters": [
+          { "name": "username", "type": "string", "required": true, "description": "TikTok username" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X GET \"https://api.masukkan-nama.com/v1/tools/stalk/tiktok?username=khaby.lame\""
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "username": "khaby.lame",
+            "displayName": "Khabane Lame",
+            "followers": "130M+",
+            "following": "150+",
+            "bio": "Senegalese born in Italy.",
+            "verified": true,
+            "posts": 1120,
+            "likes": "2.3B+"
+          }
+        }
+      },
+      {
+        "id": "get-instagram-stalk",
+        "name": "Instagram User Info",
+        "method": "GET",
+        "path": "/v1/tools/stalk/instagram",
+        "description": "Get Instagram user profile information.",
+        "parameters": [
+          { "name": "username", "type": "string", "required": true, "description": "Instagram username" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X GET \"https://api.masukkan-nama.com/v1/tools/stalk/instagram?username=instagram\""
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "username": "instagram",
+            "fullName": "Instagram",
+            "followers": "500M+",
+            "following": "100+",
+            "bio": "Creating and sharing what brings people together.",
+            "verified": true,
+            "posts": 12500
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ai",
+    "title": "AI",
+    "description": "AI-powered features including caption generation and text paraphrasing.",
+    "endpoints": [
+      {
+        "id": "post-caption",
+        "name": "Generate Caption",
+        "method": "POST",
+        "path": "/v1/ai/caption",
+        "description": "Generate a social media caption from a description.",
+        "parameters": [
+          { "name": "text", "type": "string", "required": true, "description": "Description or context" },
+          { "name": "tone", "type": "string", "required": false, "description": "funny, inspirational, professional, casual" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X POST \"https://api.masukkan-nama.com/v1/ai/caption\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\"text\": \"sunset at the beach\", \"tone\": \"funny\"}'"
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "input": "sunset at the beach",
+            "tone": "funny",
+            "caption": "When sunset hits different 😎 #vibes #mood #lit",
+            "hashtags": ["#vibes", "#mood", "#lit", "#no-cap", "#fr"]
+          }
+        }
+      },
+      {
+        "id": "post-paraphrase",
+        "name": "Paraphrase Text",
+        "method": "POST",
+        "path": "/v1/ai/paraphrase",
+        "description": "Paraphrase text with different word choices.",
+        "parameters": [
+          { "name": "text", "type": "string", "required": true, "description": "Text to paraphrase" },
+          { "name": "style", "type": "string", "required": false, "description": "Paraphrase style" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X POST \"https://api.masukkan-nama.com/v1/ai/paraphrase\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\"text\": \"I love this product\", \"style\": \"simple\"}'"
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "original": "I love this product",
+            "paraphrased": "I appreciate this product",
+            "style": "simple",
+            "replacements": 1
+          }
+        }
+      },
+      {
+        "id": "post-sentiment",
+        "name": "Sentiment Analysis",
+        "method": "POST",
+        "path": "/v1/ai/sentiment",
+        "description": "Analyze the sentiment of text (positive, negative, or neutral).",
+        "parameters": [
+          { "name": "text", "type": "string", "required": true, "description": "Text to analyze" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X POST \"https://api.masukkan-nama.com/v1/ai/sentiment\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\"text\": \"This is an amazing product!\"}'"
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "text": "This is an amazing product!",
+            "sentiment": "positive",
+            "score": 2,
+            "positiveCount": 2,
+            "negativeCount": 0
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "downloader",
+    "title": "Downloader",
+    "description": "Multi-platform media downloader API for videos, audio, and images.",
+    "endpoints": [
+      {
+        "id": "get-youtube",
+        "name": "Download YouTube Video",
+        "method": "GET",
+        "path": "/v1/downloader/youtube",
+        "description": "Download YouTube video with merged audio+video format.",
+        "parameters": [
+          { "name": "url", "type": "string", "required": true, "description": "YouTube video URL" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X GET \"https://api.masukkan-nama.com/v1/downloader/youtube?url=https%3A%2F%2Fyoutube.com%2Fwatch%3Fv%3DOVGOkz3Slsc\""
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "message": "Video fetched successfully",
+          "data": {
+            "title": "Video Title",
+            "uploader": "Channel Name",
+            "mediaItems": [
+              { "type": "video", "url": "https://download.url/video.mp4", "extension": "mp4", "width": 1920, "height": 1080 }
+            ]
+          }
+        }
+      },
+      {
+        "id": "post-tiktok",
+        "name": "Download TikTok Video",
+        "method": "POST",
+        "path": "/v1/downloader/tiktok",
+        "description": "Download TikTok video without watermark.",
+        "parameters": [
+          { "name": "url", "type": "string", "required": true, "description": "TikTok video URL" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X POST \"https://api.masukkan-nama.com/v1/downloader/tiktok\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\"url\": \"https://www.tiktok.com/@user/video/123\"}'"
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "title": "TikTok Description",
+            "uploader": "username",
+            "mediaItems": [
+              { "type": "video", "url": "https://download.url/video.mp4", "extension": "mp4" }
+            ]
+          }
+        },
+        "notes": ["TikTok may block IP addresses with rate limiting"]
+      },
+      {
+        "id": "post-instagram",
+        "name": "Download Instagram Media",
+        "method": "POST",
+        "path": "/v1/downloader/instagram",
+        "description": "Download Instagram posts, reels, and stories.",
+        "parameters": [
+          { "name": "url", "type": "string", "required": true, "description": "Instagram URL" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X POST \"https://api.masukkan-nama.com/v1/downloader/instagram\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\"url\": \"https://www.instagram.com/p/abc123/\"}'"
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "mediaItems": [
+              { "type": "photo", "url": "https://img.example.com/1.jpg", "extension": "jpg" },
+              { "type": "video", "url": "https://vid.example.com/video.mp4", "extension": "mp4" }
+            ]
+          }
+        }
+      },
+      {
+        "id": "post-spotify",
+        "name": "Download Spotify Track",
+        "method": "POST",
+        "path": "/v1/downloader/spotify",
+        "description": "Download Spotify tracks using spotdl.",
+        "parameters": [
+          { "name": "url", "type": "string", "required": true, "description": "Spotify track/album URL" }
+        ],
+        "exampleRequest": {
+          "tabs": [
+            {
+              "id": "curl",
+              "label": "cURL",
+              "language": "curl",
+              "code": "curl -X POST \"https://api.masukkan-nama.com/v1/downloader/spotify\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\"url\": \"https://open.spotify.com/track/abc123\"}'"
+            }
+          ]
+        },
+        "exampleResponse": {
+          "success": true,
+          "data": {
+            "title": "Song Title",
+            "uploader": "Artist Name",
+            "description": "Album: Album Name | Duration: 3:45",
+            "mediaItems": [
+              { "type": "audio", "url": "/downloads/Artist - Song.mp3", "extension": "mp3" }
+            ]
+          }
+        }
+      }
+    ]
+  }
+]
